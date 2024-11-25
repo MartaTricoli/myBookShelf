@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent {
   email: string = "";
   password: string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient) {
 
   }
 
@@ -31,5 +32,9 @@ export class RegisterComponent {
         alert("This email is already registered");
       }
     });
+  }
+
+  goToLogin() {
+    this.router.navigateByUrl('');
   }
 }
