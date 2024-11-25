@@ -24,7 +24,12 @@ export class RegisterComponent {
     };
     this.http.post("http://localhost:8080/myBookShelf/user/save", bodyData, {responseType: "text"}).subscribe((resultData: any) => {
       console.log(resultData);
-      alert("User Registered Successfully.");
+      const message: string = resultData.split(",")[1].split(":")[1].replace('}', '');
+      console.log(message);
+
+      if (message == '"this email is already registered."') {
+        alert("This email is already registered");
+      }
     });
   }
 }
