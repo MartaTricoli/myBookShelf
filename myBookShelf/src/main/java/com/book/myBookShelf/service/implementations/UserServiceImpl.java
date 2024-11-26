@@ -10,8 +10,10 @@ import com.book.myBookShelf.dto.LoginDTO;
 import com.book.myBookShelf.dto.UserDTO;
 import com.book.myBookShelf.entity.User;
 import com.book.myBookShelf.exception.MyException;
+import com.book.myBookShelf.repository.ErrorMessagesRepository;
 import com.book.myBookShelf.repository.UserRepository;
 import com.book.myBookShelf.response.ResponseBase;
+import com.book.myBookShelf.service.interfaces.IErrorMessageService;
 import com.book.myBookShelf.service.interfaces.IUserService;
 
 @Service
@@ -22,13 +24,16 @@ public class UserServiceImpl implements IUserService{
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	IErrorMessageService msgS;
 
 	@Override
 	public String addUser(UserDTO user) throws MyException {
 		Optional<User> u = userR.findByEmail(user.getEmail());
 		
 		if (!u.isEmpty()) {
-			throw new MyException("this email is already registered.");
+			throw new MyException(msgS.getMessagio("email-exist"));
 		}
 		
 		User newUser = new User();
@@ -46,7 +51,7 @@ public class UserServiceImpl implements IUserService{
 		Optional<User> user1 = userR.findByEmail(login.getEmail());
 		
 		if (user1.isEmpty()) {
-			return new ResponseBase(false, "email not valid");
+			return new ResponseBase(false, msgS.getMessagio("email-no-valid"));
 		}
 		
 		String password = login.getPassword();
@@ -55,12 +60,12 @@ public class UserServiceImpl implements IUserService{
 		if (passwordEncoder.matches(password, encodedPassword)) {
 			Optional<User> user = userR.findByEmailAndPassword(login.getEmail(), encodedPassword);
 			if (user.isPresent()) {
-				return new ResponseBase(true, "Successful login");
+				return new ResponseBase(true, msgS.getMessagio("login-ok"));
 			} else {
-				return new ResponseBase(false, "Failed login");
+				return new ResponseBase(false, msgS.getMessagio("login-no-ok"));
 			}
 		} else {
-			return new ResponseBase(false, "Incorrect password");
+			return new ResponseBase(false, msgS.getMessagio("wrong-password"));
 		}
 	}
 

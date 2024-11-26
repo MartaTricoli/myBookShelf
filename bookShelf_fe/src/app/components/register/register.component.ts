@@ -30,6 +30,8 @@ export class RegisterComponent {
 
       if (message == '"this email is already registered."') {
         alert("This email is already registered");
+      } else {
+        alert("registration successful!");
       }
     });
   }
