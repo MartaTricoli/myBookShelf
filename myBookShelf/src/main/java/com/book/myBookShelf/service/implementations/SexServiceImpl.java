@@ -56,13 +56,13 @@ public class SexServiceImpl implements ISexService {
 
 	@Override
 	public void remove(SexDTO sex) throws MyException {
-Optional<Sex> s = sexR.findByDescription(sex.getDescription());
+		Optional<Sex> s = sexR.findByDescription(sex.getDescription());
 		
 		if (s.isEmpty()) {
 			throw new MyException(msgS.getMessagio("sex-no-exists"));
 		}
 		
-		List<com.book.myBookShelf.entity.Authors> auth = authR.findAll();
+		List<Authors> auth = authR.findAll();
 		
 		for (Authors a: auth) {
 			if (a.getSex().getId() == s.get().getId()) {

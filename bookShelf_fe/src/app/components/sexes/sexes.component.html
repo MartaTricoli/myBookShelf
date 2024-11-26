@@ -1,0 +1,14 @@
+<div class="container">
+    <div >
+        <button class="btn">List all the sexes</button>
+    </div>
+    <form action="" class="form">
+        <div>
+            <label for="" class="label">Sex</label>
+            <input type="text" placeholder="example: male" [(ngModel)]="sex" [ngModelOptions]="{standalone: true}">
+        </div>
+        <button class="btn" (click)="removeSex()">Remove</button>
+        <button class="btn" (click)="addSex()">Add</button>
+        <button class="btn">Search</button>
+    </form>
+</div>

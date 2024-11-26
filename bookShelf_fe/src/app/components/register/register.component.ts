@@ -23,7 +23,7 @@ export class RegisterComponent {
       "email": this.email,
       "password": this.password
     };
-    this.http.post("http://localhost:8080/myBookShelf/user/save", bodyData, {responseType: "text"}).subscribe((resultData: any) => {
+    this.http.post("http://localhost:8080/myBookShelf/user/save", bodyData, {responseType: "text"}).subscribe((resultData: string) => {
       console.log(resultData);
       const message: string = resultData.split(",")[1].split(":")[1].replace('}', '');
       console.log(message);
