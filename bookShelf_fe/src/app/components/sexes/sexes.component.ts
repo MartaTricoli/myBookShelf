@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './sexes.component.html',
   styleUrl: './sexes.component.css'
 })
+
 export class SexesComponent {
 
   constructor(private http: HttpClient) {
@@ -13,6 +14,8 @@ export class SexesComponent {
   }
 
   sex : string = "";
+  newList : Array<string> = [];
+  data : object = {};
 
   addSex() {
     const bodyData = {
@@ -37,7 +40,22 @@ export class SexesComponent {
 
     this.http.delete("http://localhost:8080/myBookShelf/sex/remove", options).subscribe((s) => {
       console.log(s);
+      //to fix = right alert when the remove failed
       alert("Sex successfully removed");
+    })
+  }
+
+  //to fix = how to show and hide the list
+  //how to avoid repeting get data.
+  listAll() {
+    this.http.get<object>("http://localhost:8080/myBookShelf/sex/list").subscribe(data => {
+      console.log(data);
+      
+      Object.values(data).forEach(ob => {
+        console.log(ob.sex);
+        this.newList.push(ob.sex);
+      });
+      console.log(this.newList);
     })
   }
 }

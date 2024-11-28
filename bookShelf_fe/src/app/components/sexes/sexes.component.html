@@ -1,6 +1,9 @@
 <div class="container">
     <div >
-        <button class="btn">List all the sexes</button>
+        <button class="btn" (click)="listAll()">List all the sexes</button>
+        <ol>
+            <li *ngFor="let string of newList">{{string}}</li>
+        </ol>
     </div>
     <form action="" class="form">
         <div>
