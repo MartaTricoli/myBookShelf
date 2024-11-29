@@ -1,7 +1,8 @@
 <div class="container">
     <div >
-        <button class="btn" (click)="listAll()">List all the sexes</button>
-        <ol>
+        <button class="btn" (click)="listAll()" *ngIf="show">List all the sexes</button>
+        <button class="btn" *ngIf="!show" (click)="hide()">Hide</button>
+        <ol *ngIf="!show">
             <li *ngFor="let string of newList">{{string}}</li>
         </ol>
     </div>
@@ -12,6 +13,6 @@
         </div>
         <button class="btn" (click)="removeSex()">Remove</button>
         <button class="btn" (click)="addSex()">Add</button>
-        <button class="btn">Search</button>
+        <button class="btn" (click)="search()">Search</button>
     </form>
 </div>

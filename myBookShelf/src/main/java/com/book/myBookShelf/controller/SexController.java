@@ -3,6 +3,7 @@ package com.book.myBookShelf.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.myBookShelf.dto.SexDTO;
@@ -52,6 +54,17 @@ public class SexController {
 			resp.add(map);
 		}
 		return resp;
+	}
+	
+	//try catch, eccezione se il sex che sto cercando non c'è
+	@GetMapping("/listOne")
+	public HashMap<String, Object> listOne(@RequestParam String d) {
+		SexDTO sexDTO = sexS.findOne(d);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", sexDTO.getId());
+		map.put("description", sexDTO.getDescription());
+		return map;
 	}
 	
 	@DeleteMapping("/remove")

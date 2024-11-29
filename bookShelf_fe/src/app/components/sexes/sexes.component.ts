@@ -16,6 +16,7 @@ export class SexesComponent {
   sex : string = "";
   newList : Array<string> = [];
   data : object = {};
+  show : boolean = true;
 
   addSex() {
     const bodyData = {
@@ -23,9 +24,15 @@ export class SexesComponent {
     };
 
     this.http.post("http://localhost:8080/myBookShelf/sex/create", bodyData, {responseType: "text"}).subscribe((resultData : string) => {
-      console.log(resultData);
-      alert("new sex add successfully");
+      const resultMessage = resultData.replace("{", "").replace("}", "").split(",")[1].split(":")[1];
+      if (resultMessage == "null") {
+        alert("new sex add successfully");
+      } else {
+        alert("this sex already exists.");
+      }
     });
+    this.newList = [];
+    this.show = true;
   }
 
   removeSex() {
@@ -40,22 +47,45 @@ export class SexesComponent {
 
     this.http.delete("http://localhost:8080/myBookShelf/sex/remove", options).subscribe((s) => {
       console.log(s);
-      //to fix = right alert when the remove failed
-      alert("Sex successfully removed");
+      const message : string = Object.values(s)[1];
+      if (message == null) {
+        alert("Sex successfully removed");
+      } else {
+        alert("this sex does not exists");
+      }
     })
+    this.newList = [];
+    this.show = true;
   }
 
-  //to fix = how to show and hide the list
-  //how to avoid repeting get data.
   listAll() {
-    this.http.get<object>("http://localhost:8080/myBookShelf/sex/list").subscribe(data => {
+    console.log(this.newList.length);
+    if (this.newList.length == 0) {
+      this.http.get<object>("http://localhost:8080/myBookShelf/sex/list").subscribe(data => {
+        console.log(data);
+        Object.values(data).forEach(ob => {
+          this.newList.push(ob.sex);
+        });
+      })
+    }
+    this.show = false;
+  }
+
+  hide() {
+    console.log(this.newList.length);
+    this.show = true;
+  }
+
+  // gestire l'errore in caso in cui l'elemento che sto cercando non esista, se esiste lo mostro, se non esiste un messaggio che dice che non è presente in elenco.
+  search() {
+    this.newList = [];
+    const d : string = this.sex;
+    this.http.get<object>(`http://localhost:8080/myBookShelf/sex/listOne?d=${d}`).subscribe(data => {
       console.log(data);
+      const resultMessage = Object.values(data)[0];
+      console.log(typeof(resultMessage));
+      //da ultimare
       
-      Object.values(data).forEach(ob => {
-        console.log(ob.sex);
-        this.newList.push(ob.sex);
-      });
-      console.log(this.newList);
     })
   }
 }
