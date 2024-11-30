@@ -9,5 +9,5 @@ public interface ISexService {
 	void create(SexDTO sex) throws MyException;
 	List<SexDTO> getAll();
 	void remove(SexDTO sex) throws MyException;
-	SexDTO findOne(String description);
+	SexDTO findOne(String description) throws MyException;
 }

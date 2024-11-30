@@ -72,20 +72,21 @@ export class SexesComponent {
   }
 
   hide() {
-    console.log(this.newList.length);
     this.show = true;
   }
 
-  // gestire l'errore in caso in cui l'elemento che sto cercando non esista, se esiste lo mostro, se non esiste un messaggio che dice che non è presente in elenco.
   search() {
     this.newList = [];
     const d : string = this.sex;
     this.http.get<object>(`http://localhost:8080/myBookShelf/sex/listOne?d=${d}`).subscribe(data => {
-      console.log(data);
-      const resultMessage = Object.values(data)[0];
-      console.log(typeof(resultMessage));
-      //da ultimare
-      
+      if (Object.values(data).length == 0) {
+        alert("This item is not present in the list");
+        this.show = true;
+
+      } else {
+        this.newList.push(Object.values(data)[0]);
+        this.show = false;
+      }
     })
   }
 }

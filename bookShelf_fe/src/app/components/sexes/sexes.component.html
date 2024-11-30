@@ -2,9 +2,9 @@
     <div >
         <button class="btn" (click)="listAll()" *ngIf="show">List all the sexes</button>
         <button class="btn" *ngIf="!show" (click)="hide()">Hide</button>
-        <ol *ngIf="!show">
+        <ul *ngIf="!show">
             <li *ngFor="let string of newList">{{string}}</li>
-        </ol>
+        </ul>
     </div>
     <form action="" class="form">
         <div>

@@ -74,14 +74,12 @@ public class SexServiceImpl implements ISexService {
 		
 	}
 
-	//questo metodo deve laciare una MyException se il Sex è null/non esiste.
 	@Override
-	public SexDTO findOne(String description) {
+	public SexDTO findOne(String description) throws MyException {
 		Optional<Sex> sex = sexR.findByDescription(description);
 		
 		if (sex.isEmpty()) {
-			return new SexDTO(
-					null, null);
+			throw new MyException(msgS.getMessagio("sex-no-exist")); 
 		}
 		
 		return new SexDTO(

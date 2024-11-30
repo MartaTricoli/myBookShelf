@@ -56,15 +56,16 @@ public class SexController {
 		return resp;
 	}
 	
-	//try catch, eccezione se il sex che sto cercando non c'è
 	@GetMapping("/listOne")
-	public HashMap<String, Object> listOne(@RequestParam String d) {
-		SexDTO sexDTO = sexS.findOne(d);
+	public SexDTO listOne(@RequestParam String d){
+		SexDTO sexDTO = null;
+		try {
+			sexDTO = sexS.findOne(d);
+		} catch (MyException e) {
+			e.getMessage();
+		}
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("id", sexDTO.getId());
-		map.put("description", sexDTO.getDescription());
-		return map;
+		return sexDTO;
 	}
 	
 	@DeleteMapping("/remove")
