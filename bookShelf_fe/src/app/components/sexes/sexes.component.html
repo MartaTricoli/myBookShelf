@@ -1,0 +1,18 @@
+<div class="container">
+    <div >
+        <button class="btn" (click)="listAll()" *ngIf="show">List all the sexes</button>
+        <button class="btn" *ngIf="!show" (click)="hide()">Hide</button>
+        <ul *ngIf="!show">
+            <li *ngFor="let string of newList">{{string}}</li>
+        </ul>
+    </div>
+    <form action="" class="form">
+        <div>
+            <label for="" class="label">Sex</label>
+            <input type="text" placeholder="example: male" [(ngModel)]="sex" [ngModelOptions]="{standalone: true}">
+        </div>
+        <button class="btn" (click)="removeSex()">Remove</button>
+        <button class="btn" (click)="addSex()">Add</button>
+        <button class="btn" (click)="search()">Search</button>
+    </form>
+</div>
