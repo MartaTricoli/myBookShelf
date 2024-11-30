@@ -58,7 +58,7 @@ public class SexController {
 	
 	@GetMapping("/listOne")
 	public SexDTO listOne(@RequestParam String d){
-		SexDTO sexDTO = null;
+		SexDTO sexDTO = new SexDTO();
 		try {
 			sexDTO = sexS.findOne(d);
 		} catch (MyException e) {

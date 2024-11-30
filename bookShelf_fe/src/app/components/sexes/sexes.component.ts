@@ -17,6 +17,7 @@ export class SexesComponent {
   newList : Array<string> = [];
   data : object = {};
   show : boolean = true;
+  refresh : boolean = true;
 
   addSex() {
     const bodyData = {
@@ -33,6 +34,7 @@ export class SexesComponent {
     });
     this.newList = [];
     this.show = true;
+    this.refresh = true;
   }
 
   removeSex() {
@@ -46,7 +48,6 @@ export class SexesComponent {
     };
 
     this.http.delete("http://localhost:8080/myBookShelf/sex/remove", options).subscribe((s) => {
-      console.log(s);
       const message : string = Object.values(s)[1];
       if (message == null) {
         alert("Sex successfully removed");
@@ -56,17 +57,19 @@ export class SexesComponent {
     })
     this.newList = [];
     this.show = true;
+    this.refresh = true;
   }
 
   listAll() {
     console.log(this.newList.length);
-    if (this.newList.length == 0) {
+    if (this.refresh) {
+      this.newList = [];
       this.http.get<object>("http://localhost:8080/myBookShelf/sex/list").subscribe(data => {
-        console.log(data);
         Object.values(data).forEach(ob => {
           this.newList.push(ob.sex);
         });
       })
+      this.refresh = false;
     }
     this.show = false;
   }
@@ -77,14 +80,15 @@ export class SexesComponent {
 
   search() {
     this.newList = [];
+    this.refresh = true;
     const d : string = this.sex;
     this.http.get<object>(`http://localhost:8080/myBookShelf/sex/listOne?d=${d}`).subscribe(data => {
-      if (Object.values(data).length == 0) {
+      if (data == null) {
         alert("This item is not present in the list");
         this.show = true;
 
       } else {
-        this.newList.push(Object.values(data)[0]);
+        this.newList.push(Object.values(data)[1]);
         this.show = false;
       }
     })
