@@ -15,4 +15,8 @@ export class HomeComponent {
   goToSexes() {
     this.router.navigateByUrl('sexes');
   }
+
+  goToGenres() {
+    this.router.navigateByUrl('genres');
+  }
 }

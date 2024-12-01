@@ -1,0 +1,23 @@
+.container {
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.label {
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    margin-right: 10px;
+    border: 1px solid black;
+}
+
+.btn:hover {
+    color: white;
+    background-color: darkblue;
+}
+
+.form {
+    margin-top: 10px;
+}
